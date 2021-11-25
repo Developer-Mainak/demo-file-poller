@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="inputData" format="csv">
+      <types:shape format="weave" example="examples/input-4.csv"><![CDATA[%dw 2.0
+
+type inputData = Array<{|  ID: String,   Name: String,   CabProvider: String,   From: String,   To: String|}> {"isQuotedString": "false",
+"header": "true",
+"headerLineNumber": "0"}
+
+]]></types:shape>
+      <types:properties>
+        <types:property name="headerLineNumber" value="0"/>
+        <types:property name="header" value="true"/>
+        <types:property name="isQuotedString" value="false"/>
+      </types:properties>
+    </types:type>
+    <types:type name="olaOutput" format="csv">
+      <types:shape format="weave" example="examples/ola.csv"><![CDATA[%dw 2.0
+
+type olaOutput = Array<{|  BID: String,   "Passenger Name": String,   "Cab Provider": String,   Source: String,   Destination: String|}> {"isQuotedString": "false",
+"header": "true",
+"headerLineNumber": "0"}
+
+]]></types:shape>
+      <types:properties>
+        <types:property name="headerLineNumber" value="0"/>
+        <types:property name="header" value="true"/>
+        <types:property name="isQuotedString" value="false"/>
+      </types:properties>
+    </types:type>
+    <types:type name="uberOutput" format="csv">
+      <types:shape format="weave" example="examples/uber.csv"><![CDATA[%dw 2.0
+
+type uberOutput = Array<{|  BID: String,   "Passenger Name": String,   "Cab Provider": String,   Source: String,   Destination: String|}> {"isQuotedString": "false",
+"header": "true",
+"headerLineNumber": "0"}
+
+]]></types:shape>
+      <types:properties>
+        <types:property name="headerLineNumber" value="0"/>
+        <types:property name="header" value="true"/>
+        <types:property name="isQuotedString" value="false"/>
+      </types:properties>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#ca353af0-b795-4258-87f3-c1df6034e340">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="inputData"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#92663862-9d4f-489c-b646-797cf7078be6">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="inputData"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="olaOutput"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#27283b41-dbc3-4947-9062-28b67b13ba8e">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="inputData"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="uberOutput"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#e2f1ee4b-2c0a-495b-907e-37bd4fe5d1a5">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="inputData"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#7f531880-7dae-4dae-9060-765afc226889">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="olaOutput"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#3de7c790-97af-49d8-ba45-faa45d0787fe">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="uberOutput"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
